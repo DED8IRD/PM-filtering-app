@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        is-multidex="true"
+        jar="C:\Users\DED8IRD\Documents\School\PM-filtering-app\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.0.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.0"
+        sha1="8413c27b45b7fe61dca4a98159f65e2cee215f5a">
+        <dex dex="C:\Users\DED8IRD\Documents\School\PM-filtering-app\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-v4-23.0.0_37ee3200f64e41a845c5800549fa579a9bb6a1df\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\DED8IRD\Documents\School\PM-filtering-app\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.0"
+        sha1="c5fec0df44b1b003928664e64a28c15692f0df88">
+        <dex dex="C:\Users\DED8IRD\Documents\School\PM-filtering-app\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run_e583a8ef36c1b5a6c306b4e2fe09335ef9443486\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\DED8IRD\Documents\School\PM-filtering-app\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.0"
+        sha1="d8e62ec108f0877831ec1cb7afe2be21bb4f79c7">
+        <dex dex="C:\Users\DED8IRD\Documents\School\PM-filtering-app\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run-bootstrap_cc334d4d4457e8c6645a19951b57ff6411a2f957\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\DED8IRD\Documents\School\PM-filtering-app\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\23.0.0\jars\classes.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.0"
+        sha1="4fcf0b1879f8caf497c073e1432d398e9e2988c1">
+        <dex dex="C:\Users\DED8IRD\Documents\School\PM-filtering-app\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-appcompat-v7-23.0.0_7b2638e089ed7ec3a9bc372628be1478d84b61ea\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\DED8IRD\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\23.0.0\support-annotations-23.0.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.0"
+        sha1="990e7f98a7bad86a40b1f0bcfeb039023afd0839">
+        <dex dex="C:\Users\DED8IRD\Documents\School\PM-filtering-app\app\build\intermediates\transforms\dex\debug\folders\1000\10\support-annotations-23.0.0_3837e15a5af6f44416690973ecc68898beeca5c2\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\DED8IRD\Documents\School\PM-filtering-app\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.0.0\jars\libs\internal_impl-23.0.0.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="23.0.0"
+        sha1="8bd336eeae661e8311330284897ee07f8ebaa297">
+        <dex dex="C:\Users\DED8IRD\Documents\School\PM-filtering-app\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-23.0.0_edc31dae92c51a8d7b029e5257d12bd7138ffa0c\classes.dex" />
+    </item>
+
+</items>
