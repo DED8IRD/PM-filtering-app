@@ -1,51 +1,56 @@
 package hcilab.pm_filtering_app;
 
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.content.Context;
 import android.widget.ImageView;
-import android.widget.GridView;
+
+import java.io.File;
 
 /**
- * Created by alonpek on 2/6/17.
+ * Created by nigelhenshaw on 25/06/2015.
  */
-public class ImageAdapter extends BaseAdapter {
-    private Context mContext;
+public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> {
 
-    public ImageAdapter(Context c) {
-        mContext = c;
+    private File imagesFile;
+
+    public ImageAdapter(File folderFile) {
+        imagesFile = folderFile;
     }
 
     @Override
-    public int getCount() {
-        return 0;
+    public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View view = LayoutInflater.from(parent.getContext())
+                .inflate(R.layout.gallery_images, parent, false);
+        return new ViewHolder(view);
     }
 
     @Override
-    public Object getItem(int position) {
-        return null;
+    public void onBindViewHolder(ViewHolder holder, int position) {
+        File imageFile = imagesFile.listFiles()[position];
+        Bitmap imageBitmap = BitmapFactory.decodeFile(imageFile.getAbsolutePath());
+        holder.getImageView().setImageBitmap(imageBitmap);
     }
 
     @Override
-    public long getItemId(int position) {
-        return 0;
+    public int getItemCount() {
+        return imagesFile.listFiles().length;
     }
 
-    @Override
-    //Create a new ImageView for each item referenced by the adapter
-    public View getView(int position, View convertView, ViewGroup parent) {
-        ImageView imageView;
-        if (convertView == null) {
-            //If its not recylced, initialize some attributes
-            imageView = new ImageView(mContext);
-            imageView.setLayoutParams(new GridView.LayoutParams(85,85));
-            imageView.setScaleType(ImageView.ScaleType.CENTER_CROP);
-            imageView.setPadding(8, 8, 8, 8);
+    public static class ViewHolder extends RecyclerView.ViewHolder {
+        private ImageView imageView;
 
-        } else {
-            imageView = (ImageView) convertView;
+        public ViewHolder(View view) {
+            super(view);
+
+            imageView = (ImageView) view.findViewById(R.id.img);
         }
-        return imageView;
+
+        public ImageView getImageView() {
+            return imageView;
+        }
     }
 }
