@@ -19,8 +19,12 @@ android {
         }
     }
 }
+repositories {
+    mavenCentral() // jcenter() works as well because it pulls from Maven Central
+}
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     compile 'com.android.support:recyclerview-v7:24.2.1'
+
 }

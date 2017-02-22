@@ -6,11 +6,13 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.LruCache;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,9 +20,13 @@ import android.widget.ImageView;
 
 import java.io.File;
 import java.io.IOException;
+import java.lang.ref.SoftReference;
 import java.text.SimpleDateFormat;
+import java.util.Collections;
 import java.util.Date;
-
+import java.util.HashSet;
+import java.util.Iterator;
+import java.util.Set;
 
 
 /**
@@ -32,6 +38,9 @@ public class CameraIntentActivity extends Activity {
     private String mImageFileLocation = "";
     private String GALLERY_LOCATION = "image gallery";
     private File mGalleryFolder;
+    private static LruCache<String, Bitmap> memoryCache;
+    private static Set<SoftReference<Bitmap>> reusableBitmap;
+
 
     private RecyclerView mRecyclerView;
 
@@ -46,11 +55,38 @@ public class CameraIntentActivity extends Activity {
 
         mRecyclerView = (RecyclerView) findViewById(R.id.galleryRecyclerView);
         //Int at end = number of columns in recycler view
-        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(this, 1);
+        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(this, 2);
         mRecyclerView.setLayoutManager(layoutManager);
 
         RecyclerView.Adapter imageAdapter = new ImageAdapter(mGalleryFolder);
         mRecyclerView.setAdapter(imageAdapter);
+
+
+        //Set up memory cache
+        final int maxMemorySize = (int) Runtime.getRuntime().maxMemory();
+        final int cacheSize = maxMemorySize / 100;
+
+        memoryCache = new LruCache<String, Bitmap>(cacheSize) {
+
+            @Override
+            protected int sizeOf(String key, Bitmap value) {
+                return value.getByteCount() / 1024;
+            }
+
+            @Override
+            protected void entryRemoved(boolean evicted, String key, Bitmap oldValue, Bitmap newValue) {
+                super.entryRemoved(evicted, key, oldValue, newValue);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR1) {
+                    reusableBitmap.add(new SoftReference<Bitmap>(oldValue));
+                }
+            }
+
+
+        };
+
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR1) {
+            reusableBitmap = Collections.synchronizedSet(new HashSet<SoftReference<Bitmap>>());
+        }
 
     }
 
@@ -146,5 +182,63 @@ public class CameraIntentActivity extends Activity {
         mPhotoCapturedImageView.setImageBitmap(photoReducedSizeBitmp);
 
 
+    }
+
+    public static Bitmap getBitmapFromMemoryCache(String key) {
+        return memoryCache.get(key);
+    }
+
+    public static void setBitmapToMemoryCache(String key, Bitmap bitmap) {
+        if (getBitmapFromMemoryCache(key) == null) {
+            memoryCache.put(key, bitmap);
+        }
+    }
+
+    private static int getBytesPerPixel(Bitmap.Config config) {
+        if (config == Bitmap.Config.ARGB_8888) {
+            return 4;
+        } else if (config == Bitmap.Config.RGB_565) {
+            return 2;
+        } else if (config == Bitmap.Config.ARGB_4444) {
+            return 2;
+        } else if (config == Bitmap.Config.ALPHA_8) {
+            return 1;
+        }
+        return 1;
+    }
+
+    private static boolean canUseForBitmap(Bitmap candidate, BitmapFactory.Options options) {
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
+            int width = options.outWidth / options.inSampleSize;
+            int height = options.outHeight / options.inSampleSize;
+            int byteCount = width * height * getBytesPerPixel(candidate.getConfig());
+            return byteCount <= candidate.getAllocationByteCount();
+        }
+        return candidate.getWidth() == options.outWidth &&
+                candidate.getHeight() == options.outHeight &&
+                options.inSampleSize == 1;
+    }
+
+    public static Bitmap getBitmapFromReusableSet(BitmapFactory.Options options) {
+        Bitmap bitmap = null;
+        if(reusableBitmap != null && !reusableBitmap.isEmpty()){
+            synchronized (reusableBitmap) {
+                Bitmap item;
+                Iterator<SoftReference<Bitmap>> iterator = reusableBitmap.iterator();
+                while(iterator.hasNext()) {
+                    item = iterator.next().get();
+                    if(item != null && item.isMutable()) {
+                        if(canUseForBitmap(item, options)) {
+                            bitmap = item;
+                            iterator.remove();
+                            break;
+                        }
+                    } else {
+                        iterator.remove();
+                    }
+                }
+            }
+        }
+        return bitmap;
     }
 }
