@@ -2,6 +2,7 @@ package hcilab.pm_filtering_app;
 
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -43,6 +44,7 @@ public class CameraIntentActivity extends Activity {
 
 
     private RecyclerView mRecyclerView;
+    private static Context context;
 
 
 
@@ -51,14 +53,16 @@ public class CameraIntentActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camara_intent);
 
+        CameraIntentActivity.context = getApplicationContext();
+
         createImageGallery();
 
         mRecyclerView = (RecyclerView) findViewById(R.id.galleryRecyclerView);
         //Int at end = number of columns in recycler view
-        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(this, 2);
+        RecyclerView.LayoutManager layoutManager = new GridLayoutManager(this, 3);
         mRecyclerView.setLayoutManager(layoutManager);
 
-        RecyclerView.Adapter imageAdapter = new ImageAdapter(mGalleryFolder);
+        RecyclerView.Adapter imageAdapter = new ImageAdapter(mGalleryFolder, this);
         mRecyclerView.setAdapter(imageAdapter);
 
 
@@ -87,6 +91,10 @@ public class CameraIntentActivity extends Activity {
         if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.HONEYCOMB_MR1) {
             reusableBitmap = Collections.synchronizedSet(new HashSet<SoftReference<Bitmap>>());
         }
+
+        //Intent intent = new Intent(CameraIntentActivity.this, ImageAdapter.class);
+        //intent.putExtra("mainContext", CameraIntentActivity.context);
+
 
     }
 
@@ -138,7 +146,7 @@ public class CameraIntentActivity extends Activity {
             // Bitmap photoCapturedBitmap = BitmapFactory.decodeFile(mImageFileLocation);
             // mPhotoCapturedImageView.setImageBitmap(photoCapturedBitmap);
             //setReducedImageSize();
-            RecyclerView.Adapter newImageAdapter = new ImageAdapter(mGalleryFolder);
+            RecyclerView.Adapter newImageAdapter = new ImageAdapter(mGalleryFolder, this);
             mRecyclerView.swapAdapter(newImageAdapter, false);
 
         }
@@ -241,4 +249,19 @@ public class CameraIntentActivity extends Activity {
         }
         return bitmap;
     }
+
+    /*
+    public void popUp(File file, View view) {
+        PopupMenu popupMenu = new PopupMenu(this.getApplicationContext(), view);
+        popupMenu.inflate(R.menu.menu_main);
+        popupMenu.show();
+    }
+    */
+
+    public static Context getMainContext() {
+        return CameraIntentActivity.context;
+    }
+
+
+
 }
