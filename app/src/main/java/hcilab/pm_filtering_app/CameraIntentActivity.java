@@ -250,18 +250,8 @@ public class CameraIntentActivity extends Activity {
         return bitmap;
     }
 
-    /*
-    public void popUp(File file, View view) {
-        PopupMenu popupMenu = new PopupMenu(this.getApplicationContext(), view);
-        popupMenu.inflate(R.menu.menu_main);
-        popupMenu.show();
-    }
-    */
-
     public static Context getMainContext() {
         return CameraIntentActivity.context;
     }
-
-
 
 }

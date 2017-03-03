@@ -207,23 +207,4 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
         return true;
     }
 
-    /*
-    @Override
-    public boolean onMenuItemClick(MenuItem menuItem) {
-        //Toast.makeText(CameraIntentActivity.getMainContext(), menuItem.getTitle(), Toast.LENGTH_SHORT).show();
-        switch(menuItem.getItemId()) {
-            case R.id.negative_react:
-                Toast.makeText(CameraIntentActivity.getMainContext(),  curId + " is negative react", Toast.LENGTH_SHORT).show();
-                return true;
-            case R.id.positive_react:
-                Toast.makeText(CameraIntentActivity.getMainContext(), "You selected positive react", Toast.LENGTH_SHORT).show();
-                return true;
-            default:
-                return false;
-        }
-        //return false;
-    }
-    */
-
-
 }
