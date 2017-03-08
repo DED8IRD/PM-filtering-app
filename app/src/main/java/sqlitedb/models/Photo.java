@@ -16,6 +16,7 @@ public class Photo {
     private String image;
     private String tag;
     private int rank;
+    private String delete;
 
     // constructors
     public Photo() {
@@ -27,6 +28,7 @@ public class Photo {
         this.image = image;
         this.tag = tag;
         this.rank = -1;
+        this.delete = null;
     }
 
     // setters
@@ -46,6 +48,8 @@ public class Photo {
 
     public void setRank(int rank) { this.rank = rank; }
 
+    public void setDelete(String timestamp) {this.delete = timestamp; }
+
     // getters
     public long getId() {
         return this.id;
@@ -61,11 +65,13 @@ public class Photo {
         return this.image;
     }
 
+    public String getTag() {
+        return this.tag;
+    }
+
     public int getRank() {
         return this.rank;
     }
 
-    public String getTag() {
-        return this.tag;
-    }
+    public String getDelete() {return  this.delete; }
 }

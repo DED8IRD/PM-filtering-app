@@ -2,10 +2,11 @@ package sqlitedb.helpers;
 
 /**
  * dbHelper.java
- * Helper class encapsulating SQLite operations for the photo tables.
+ * Helper class encapsulating SQLite operations for the photos table.
  * Created by DED8IRD on 11/7/2016.
  */
 
+import android.animation.PropertyValuesHolder;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -34,12 +35,13 @@ public class dbHelper extends SQLiteOpenHelper {
     // Common column names
     private static final String KEY_ID = "id";
 
-    // Pip Session Info Table - attributes
+    // Photo Info Table - attributes
     private static final String KEY_PARTICIPANT = "participant";
     private static final String KEY_TIMESTAMP = "timestamp";
     private static final String KEY_IMAGE = "image";
-    private static final String KEY_RANK = "rank";
     private static final String KEY_TAG = "tag";
+    private static final String KEY_RANK = "rank";
+    private  static final String KEY_DELETE = "delete";
 
     // Table Create Statements
     private static final String CREATE_TABLE_PHOTOS = "CREATE TABLE "
@@ -48,8 +50,9 @@ public class dbHelper extends SQLiteOpenHelper {
             + KEY_PARTICIPANT + " CHAR(40), "
             + KEY_TIMESTAMP + " CHAR(60), "
             + KEY_IMAGE + " TEXT, "
+            + KEY_TAG + " CHAR(40),"
             + KEY_RANK + " INTEGER, "
-            + KEY_TAG + " CHAR(40)" + ")";
+            + KEY_DELETE + "CHAR(60)" +")";
 
     public dbHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
@@ -71,33 +74,34 @@ public class dbHelper extends SQLiteOpenHelper {
         onCreate(db);
     }
 
-    // ------------------------ "Pip Sessions" table methods ------------------------ //
+    // ------------------------ Photo table methods ------------------------ //
 
     /*
-     * Creating a Pip Session
+     * Add photo to table
      */
-    public long addPhoto(Photo session) {
+    public long addPhoto(Photo photo) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(KEY_PARTICIPANT, session.getParticipant());
-        values.put(KEY_TIMESTAMP, session.getTimestamp());
-        values.put(KEY_IMAGE, session.getImage());
-        values.put(KEY_RANK, session.getRank());
-        values.put(KEY_TAG, session.getTag());
+        values.put(KEY_PARTICIPANT, photo.getParticipant());
+        values.put(KEY_TIMESTAMP, photo.getTimestamp());
+        values.put(KEY_IMAGE, photo.getImage());
+        values.put(KEY_TAG, photo.getTag());
+        values.put(KEY_RANK, photo.getRank());
+        values.put(KEY_DELETE, photo.getDelete());
 
         // insert row
         return db.insert(TABLE_PHOTOS, null, values);
     }
 
     /*
-     * get single session
+     * Get single photo
      */
-    public Photo getSession(long session_id) {
+    public Photo getPhoto(long photo_id) {
         SQLiteDatabase db = this.getReadableDatabase();
 
         String selectQuery = "SELECT  * FROM " + TABLE_PHOTOS + " WHERE "
-                + KEY_ID + " = " + session_id;
+                + KEY_ID + " = " + photo_id;
 
         Log.e(LOG, selectQuery);
 
@@ -106,18 +110,18 @@ public class dbHelper extends SQLiteOpenHelper {
         if (c != null)
             c.moveToFirst();
 
-        Photo session = new Photo();
-        session.setId(c.getInt(c.getColumnIndex(KEY_ID)));
-        session.setParticipant((c.getString(c.getColumnIndex(KEY_PARTICIPANT))));
+        Photo photo = new Photo();
+        photo.setId(c.getInt(c.getColumnIndex(KEY_ID)));
+        photo.setParticipant((c.getString(c.getColumnIndex(KEY_PARTICIPANT))));
 
-        return session;
+        return photo;
     }
 
     /*
-     * getting all sessions
+     * Get all photos
      */
-    public List<Photo> getAllSessions() {
-        List<Photo> sessions = new ArrayList<Photo>();
+    public List<Photo> getAllPhotos() {
+        List<Photo> photos = new ArrayList<Photo>();
         String selectQuery = "SELECT  * FROM " + TABLE_PHOTOS;
 
         Log.e(LOG, selectQuery);
@@ -128,26 +132,27 @@ public class dbHelper extends SQLiteOpenHelper {
         // looping through all rows and adding to list
         if (c.moveToFirst()) {
             do {
-                Photo session = new Photo();
-                session.setId(c.getInt((c.getColumnIndex(KEY_ID))));
-                session.setParticipant((c.getString(c.getColumnIndex(KEY_PARTICIPANT))));
-                session.setTimestamp((c.getString(c.getColumnIndex(KEY_TIMESTAMP))));
-                session.setImage((c.getString(c.getColumnIndex(KEY_IMAGE))));
-                session.setRank((c.getInt(c.getColumnIndex(KEY_RANK))));
-                session.setTag((c.getString(c.getColumnIndex(KEY_TAG))));
+                Photo photo = new Photo();
+                photo.setId(c.getInt(c.getColumnIndex(KEY_ID)));
+                photo.setParticipant(c.getString(c.getColumnIndex(KEY_PARTICIPANT)));
+                photo.setTimestamp(c.getString(c.getColumnIndex(KEY_TIMESTAMP)));
+                photo.setImage(c.getString(c.getColumnIndex(KEY_IMAGE)));
+                photo.setTag(c.getString(c.getColumnIndex(KEY_TAG)));
+                photo.setRank(c.getInt(c.getColumnIndex(KEY_RANK)));
+                photo.setDelete(c.getString(c.getColumnIndex(KEY_DELETE)));
 
-                // adding to session list
-                sessions.add(session);
+                // adding to photo list
+                photos.add(photo);
             } while (c.moveToNext());
         }
 
-        return sessions;
+        return photos;
     }
 
     /*
-     * Get session count
+     * Get photo count
      */
-    public int getSessionCount() {
+    public int getPhotoCount() {
         String countQuery = "SELECT  * FROM " + TABLE_PHOTOS;
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.rawQuery(countQuery, null);
@@ -160,37 +165,88 @@ public class dbHelper extends SQLiteOpenHelper {
     }
 
     /*
-     * Updating a session
+     * Update photo
      */
-    public int updateSession(Photo session) {
+    public int updatePhoto(Photo photo) {
         SQLiteDatabase db = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
-        values.put(KEY_ID, session.getId());
-        values.put(KEY_PARTICIPANT, session.getParticipant());
-        values.put(KEY_TIMESTAMP, session.getTimestamp());
-        values.put(KEY_IMAGE, session.getImage());
-        values.put(KEY_RANK, session.getRank());
-        values.put(KEY_TAG, session.getTag());
+        values.put(KEY_ID, photo.getId());
+        values.put(KEY_PARTICIPANT, photo.getParticipant());
+        values.put(KEY_TIMESTAMP, photo.getTimestamp());
+        values.put(KEY_IMAGE, photo.getImage());
+        values.put(KEY_TAG, photo.getTag());
+        values.put(KEY_RANK, photo.getRank());
+        values.put(KEY_DELETE, photo.getDelete());
 
         // updating row
         return db.update(TABLE_PHOTOS, values, KEY_ID + " = ?",
-                new String[] { String.valueOf(session.getId()) });
+                new String[] { String.valueOf(photo.getId()) });
     }
 
     /*
-     * Deleting a session
+     * Update photo rank
      */
-    public void deleteSession(long session_id) {
+    public int updateTag(Photo photo, int rank) {
         SQLiteDatabase db = this.getWritableDatabase();
-        db.delete(TABLE_PHOTOS, KEY_ID + " = ?",
-                new String[] { String.valueOf(session_id) });
+        ContentValues values = new ContentValues();
+        values.put(KEY_ID, photo.getId());
+        values.put(KEY_PARTICIPANT, photo.getParticipant());
+        values.put(KEY_TIMESTAMP, photo.getTimestamp());
+        values.put(KEY_IMAGE, photo.getImage());
+        values.put(KEY_TAG, photo.getTag());
+        values.put(KEY_RANK, rank);
+        values.put(KEY_DELETE, photo.getDelete());
+
+        // updating row
+        return db.update(TABLE_PHOTOS, values, KEY_ID + " = ?",
+                new String[] { String.valueOf(photo.getId()) });
     }
 
     /*
-     * Clear session
+    * Update photo tag
+    */
+    public int updateTag(Photo photo, String tag) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(KEY_ID, photo.getId());
+        values.put(KEY_PARTICIPANT, photo.getParticipant());
+        values.put(KEY_TIMESTAMP, photo.getTimestamp());
+        values.put(KEY_IMAGE, photo.getImage());
+        values.put(KEY_TAG, tag);
+        values.put(KEY_RANK, photo.getRank());
+        values.put(KEY_DELETE, photo.getDelete());
+
+        // updating row
+        return db.update(TABLE_PHOTOS, values, KEY_ID + " = ?",
+                new String[] { String.valueOf(photo.getId()) });
+    }
+
+    /*
+     * Delete photo
+     * Note: Does NOT delete photo from table
+     * This method adds a timestamp to KEY_DELETE
      */
-    public void clearSession() {
+    public int deletePhoto(Photo photo, String timestamp) {
+        SQLiteDatabase db = this.getWritableDatabase();
+        ContentValues values = new ContentValues();
+        values.put(KEY_ID, photo.getId());
+        values.put(KEY_PARTICIPANT, photo.getParticipant());
+        values.put(KEY_TIMESTAMP, photo.getTimestamp());
+        values.put(KEY_IMAGE, photo.getImage());
+        values.put(KEY_TAG, photo.getTag());
+        values.put(KEY_RANK, photo.getRank());
+        values.put(KEY_DELETE, timestamp);
+
+        // updating row
+        return db.update(TABLE_PHOTOS, values, KEY_ID + " = ?",
+                new String[] { String.valueOf(photo.getId()) });
+    }
+
+    /*
+     * Clear table
+     */
+    public void clearPhoto() {
         SQLiteDatabase db = this.getWritableDatabase();
         db.execSQL("DROP TABLE IF EXISTS " + TABLE_PHOTOS);
         onCreate(db);
