@@ -40,7 +40,7 @@ public class DBHelper extends SQLiteOpenHelper {
     private static final String KEY_IMAGE = "image";
     private static final String KEY_TAG = "tag";
     private static final String KEY_RANK = "rank";
-    private  static final String KEY_DELETE = "delete";
+    private  static final String KEY_DELETE = "deleted_on";
 
     // Table Create Statements
     private static final String CREATE_TABLE_PHOTOS = "CREATE TABLE "
@@ -191,7 +191,7 @@ public class DBHelper extends SQLiteOpenHelper {
     /*
      * Update photo rank
      */
-    public int updateTag(Photo photo, int rank) {
+    public int updateRank(Photo photo, int rank) {
         SQLiteDatabase db = this.getWritableDatabase();
         ContentValues values = new ContentValues();
         values.put(KEY_ID, photo.getId());
@@ -237,7 +237,7 @@ public class DBHelper extends SQLiteOpenHelper {
         values.put(KEY_ID, photo.getId());
         values.put(KEY_PARTICIPANT, photo.getParticipant());
         values.put(KEY_TIMESTAMP, photo.getTimestamp());
-        values.put(KEY_IMAGE, photo.getImage());
+        values.put(KEY_IMAGE, "null");
         values.put(KEY_TAG, photo.getTag());
         values.put(KEY_RANK, photo.getRank());
         values.put(KEY_DELETE, timestamp);

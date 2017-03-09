@@ -43,7 +43,7 @@ public class CameraIntentActivity extends Activity {
     private File mGalleryFolder;
     private static LruCache<String, Bitmap> memoryCache;
     private static Set<SoftReference<Bitmap>> reusableBitmap;
-//    private DBHelper db;
+    private DBHelper db;
     private RecyclerView mRecyclerView;
     private static Context context;
 
@@ -57,7 +57,7 @@ public class CameraIntentActivity extends Activity {
         // Create gallery
         createImageGallery();
 //        // Initialize db
-//        db = new DBHelper(CameraIntentActivity.context);
+        db = new DBHelper(CameraIntentActivity.context);
         mRecyclerView = (RecyclerView) findViewById(R.id.galleryRecyclerView);
         //Int at end = number of columns in recycler view
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(this, 3);
@@ -168,21 +168,21 @@ public class CameraIntentActivity extends Activity {
         File image = File.createTempFile(imageFileName,".jpg", mGalleryFolder);
         mImageFileLocation = image.getAbsolutePath();
 
-//        // Add photo to db
-//        Photo photo = new Photo(GALLERY_LOCATION, timeStamp, mImageFileLocation);
-//        db.addPhoto(photo);
-//
-//        Log.d("Get photos", "Getting all photos from db");
-//        List<Photo> allPhotos = db.getAllPhotos();
-//        for(Photo p: allPhotos) {
-//            Log.d("id", String.valueOf(p.getId()));
-//            Log.d("participant", p.getParticipant());
-//            Log.d("timestamp", p.getTimestamp());
-//            Log.d("location", p.getImage());
-//            Log.d("tag", p.getTag());
-//            Log.d("rank", String.valueOf(p.getRank()));
-//            Log.d("delete", p.getDelete());
-//        }
+        // Add photo to db
+        Photo photo = new Photo(GALLERY_LOCATION, timeStamp, mImageFileLocation);
+        db.addPhoto(photo);
+
+        Log.d("Get photos", "Getting all photos from db");
+        List<Photo> allPhotos = db.getAllPhotos();
+        for(Photo p: allPhotos) {
+            Log.d("id", String.valueOf(p.getId()));
+            Log.d("participant", p.getParticipant());
+            Log.d("timestamp", p.getTimestamp());
+            Log.d("location", p.getImage());
+            Log.d("tag", String.valueOf(p.getTag()));
+            Log.d("rank", String.valueOf(p.getRank()));
+            Log.d("delete", String.valueOf(p.getDelete()));
+        }
 
         return image;
 

@@ -1,4 +1,6 @@
 package hcilab.pm_filtering_app;
+import sqlitedb.helpers.DBHelper;
+import sqlitedb.models.Photo;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -142,7 +144,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
         @Override
         public void onClick(View view) {
             int pos = getAdapterPosition();
-            String name = posTitle.get(pos);
+            String imageFileName = posTitle.get(pos);
 
             //Toast.makeText(CameraIntentActivity.getMainContext(), Integer.toString(pos), Toast.LENGTH_SHORT).show();
             
@@ -161,15 +163,15 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
         public boolean onMenuItemClick(MenuItem menuItem) {
             //Toast.makeText(CameraIntentActivity.getMainContext(), , Toast.LENGTH_SHORT).show();
             int pos = getAdapterPosition();
-            String name = posTitle.get(pos);
+            String imageFileName = posTitle.get(pos);
             switch(menuItem.getItemId()) {
                 case R.id.negative_react:
-                    Toast.makeText(CameraIntentActivity.getMainContext(),name + " is negative react", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CameraIntentActivity.getMainContext(),imageFileName + " is negative react", Toast.LENGTH_SHORT).show();
                     positive = false;
                     negative = true;
                     return true;
                 case R.id.positive_react:
-                    Toast.makeText(CameraIntentActivity.getMainContext(), name + " is positive react", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CameraIntentActivity.getMainContext(), imageFileName + " is positive react", Toast.LENGTH_SHORT).show();
                     positive = true;
                     negative = false;
                     return true;
