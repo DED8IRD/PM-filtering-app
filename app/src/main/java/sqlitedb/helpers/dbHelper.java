@@ -1,12 +1,11 @@
 package sqlitedb.helpers;
 
 /**
- * dbHelper.java
+ * DBHelper.java
  * Helper class encapsulating SQLite operations for the photos table.
  * Created by DED8IRD on 11/7/2016.
  */
 
-import android.animation.PropertyValuesHolder;
 import android.content.ContentValues;
 import android.content.Context;
 import android.database.Cursor;
@@ -18,10 +17,10 @@ import java.util.List;
 import sqlitedb.models.Photo;
 
 
-public class dbHelper extends SQLiteOpenHelper {
+public class DBHelper extends SQLiteOpenHelper {
 
     // Logcat tag
-    private static final String LOG = dbHelper.class.getName();
+    private static final String LOG = DBHelper.class.getName();
 
     // Database Version
     private static final int DATABASE_VERSION = 1;
@@ -50,11 +49,11 @@ public class dbHelper extends SQLiteOpenHelper {
             + KEY_PARTICIPANT + " CHAR(40), "
             + KEY_TIMESTAMP + " CHAR(60), "
             + KEY_IMAGE + " TEXT, "
-            + KEY_TAG + " CHAR(40),"
+            + KEY_TAG + " CHAR(40), "
             + KEY_RANK + " INTEGER, "
-            + KEY_DELETE + "CHAR(60)" +")";
+            + KEY_DELETE + " CHAR(60)" +")";
 
-    public dbHelper(Context context) {
+    public DBHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
 
@@ -112,7 +111,12 @@ public class dbHelper extends SQLiteOpenHelper {
 
         Photo photo = new Photo();
         photo.setId(c.getInt(c.getColumnIndex(KEY_ID)));
-        photo.setParticipant((c.getString(c.getColumnIndex(KEY_PARTICIPANT))));
+        photo.setParticipant(c.getString(c.getColumnIndex(KEY_PARTICIPANT)));
+        photo.setTimestamp(c.getString(c.getColumnIndex(KEY_TIMESTAMP)));
+        photo.setImage(c.getString(c.getColumnIndex(KEY_IMAGE)));
+        photo.setTag(c.getString(c.getColumnIndex(KEY_TAG)));
+        photo.setRank(c.getInt(c.getColumnIndex(KEY_RANK)));
+        photo.setDelete(c.getString(c.getColumnIndex(KEY_DELETE)));
 
         return photo;
     }

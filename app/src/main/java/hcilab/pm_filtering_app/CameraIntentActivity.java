@@ -1,6 +1,6 @@
 package hcilab.pm_filtering_app;
-
-
+import sqlitedb.helpers.DBHelper;
+import sqlitedb.models.Photo;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -27,7 +27,9 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
+import android.util.Log;
 
 
 /**
@@ -37,12 +39,11 @@ public class CameraIntentActivity extends Activity {
     private static final int ACTIVITY_START_CAMERA_APP = 0;
     private ImageView mPhotoCapturedImageView;
     private String mImageFileLocation = "";
-    private String GALLERY_LOCATION = "image gallery";
+    private String GALLERY_LOCATION = "00000";
     private File mGalleryFolder;
     private static LruCache<String, Bitmap> memoryCache;
     private static Set<SoftReference<Bitmap>> reusableBitmap;
-
-
+//    private DBHelper db;
     private RecyclerView mRecyclerView;
     private static Context context;
 
@@ -52,11 +53,11 @@ public class CameraIntentActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camara_intent);
-
         CameraIntentActivity.context = getApplicationContext();
-
+        // Create gallery
         createImageGallery();
-
+//        // Initialize db
+//        db = new DBHelper(CameraIntentActivity.context);
         mRecyclerView = (RecyclerView) findViewById(R.id.galleryRecyclerView);
         //Int at end = number of columns in recycler view
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(this, 3);
@@ -164,9 +165,24 @@ public class CameraIntentActivity extends Activity {
 
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
         String imageFileName = "IMAGE_" + timeStamp + "_";
-
         File image = File.createTempFile(imageFileName,".jpg", mGalleryFolder);
         mImageFileLocation = image.getAbsolutePath();
+
+//        // Add photo to db
+//        Photo photo = new Photo(GALLERY_LOCATION, timeStamp, mImageFileLocation);
+//        db.addPhoto(photo);
+//
+//        Log.d("Get photos", "Getting all photos from db");
+//        List<Photo> allPhotos = db.getAllPhotos();
+//        for(Photo p: allPhotos) {
+//            Log.d("id", String.valueOf(p.getId()));
+//            Log.d("participant", p.getParticipant());
+//            Log.d("timestamp", p.getTimestamp());
+//            Log.d("location", p.getImage());
+//            Log.d("tag", p.getTag());
+//            Log.d("rank", String.valueOf(p.getRank()));
+//            Log.d("delete", p.getDelete());
+//        }
 
         return image;
 

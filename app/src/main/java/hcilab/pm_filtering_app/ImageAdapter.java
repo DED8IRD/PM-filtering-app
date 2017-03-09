@@ -1,5 +1,4 @@
 package hcilab.pm_filtering_app;
-
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;

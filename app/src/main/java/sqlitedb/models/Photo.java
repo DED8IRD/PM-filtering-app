@@ -22,11 +22,11 @@ public class Photo {
     public Photo() {
     }
 
-    public Photo(String participant, String timestamp, String image, String tag) {
+    public Photo(String participant, String timestamp, String image) {
         this.participant = participant;
         this.timestamp = timestamp;
         this.image = image;
-        this.tag = tag;
+        this.tag = null;
         this.rank = -1;
         this.delete = null;
     }
