@@ -25,7 +25,7 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
 
     static HashMap<Integer, String> posTitle = new HashMap<>();
 
-    private File imagesFile;
+    File imagesFile;
     private Bitmap placeHolder;
     String curTitle;
     int curId;
@@ -116,21 +116,19 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
         return imagesFile.listFiles().length;
     }
 
-    public static class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, OnMenuItemClickListener {
+    public class ViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener, OnMenuItemClickListener {
         private ImageView imageView;
         //private int position = imageView.getMeasuredState();
         private boolean positive = false;
         private boolean negative = false;
+        private DBHelper db = new DBHelper(context);
         //public TextView title;
-        //Context context;
-
 
 
         public ViewHolder(View view) {
             super(view);
 
             imageView = (ImageView) view.findViewById(R.id.img);
-            //this.context = context;
             view.setOnClickListener(this);
 
 
@@ -164,16 +162,20 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
             //Toast.makeText(CameraIntentActivity.getMainContext(), , Toast.LENGTH_SHORT).show();
             int pos = getAdapterPosition();
             String imageFileName = posTitle.get(pos);
+            File image = new File(imagesFile, imageFileName);
+            Photo photo = db.getPhoto(image.getAbsolutePath());
             switch(menuItem.getItemId()) {
                 case R.id.negative_react:
                     Toast.makeText(CameraIntentActivity.getMainContext(),imageFileName + " is negative react", Toast.LENGTH_SHORT).show();
                     positive = false;
                     negative = true;
+                    db.updateTag(photo, "negative");
                     return true;
                 case R.id.positive_react:
                     Toast.makeText(CameraIntentActivity.getMainContext(), imageFileName + " is positive react", Toast.LENGTH_SHORT).show();
                     positive = true;
                     negative = false;
+                    db.updateTag(photo, "positive");
                     return true;
                 default:
                     return false;

@@ -121,6 +121,31 @@ public class DBHelper extends SQLiteOpenHelper {
         return photo;
     }
 
+    public Photo getPhoto(String imageFileName) {
+        SQLiteDatabase db = this.getReadableDatabase();
+
+        String selectQuery = "SELECT  * FROM " + TABLE_PHOTOS + " WHERE "
+                + KEY_IMAGE + " = " + "\"" + imageFileName + "\"";
+
+        Log.e(LOG, selectQuery);
+
+        Cursor c = db.rawQuery(selectQuery, null);
+
+        if (c != null)
+            c.moveToFirst();
+
+        Photo photo = new Photo();
+        photo.setId(c.getInt(c.getColumnIndex(KEY_ID)));
+        photo.setParticipant(c.getString(c.getColumnIndex(KEY_PARTICIPANT)));
+        photo.setTimestamp(c.getString(c.getColumnIndex(KEY_TIMESTAMP)));
+        photo.setImage(c.getString(c.getColumnIndex(KEY_IMAGE)));
+        photo.setTag(c.getString(c.getColumnIndex(KEY_TAG)));
+        photo.setRank(c.getInt(c.getColumnIndex(KEY_RANK)));
+        photo.setDelete(c.getString(c.getColumnIndex(KEY_DELETE)));
+
+        return photo;
+    }
+
     /*
      * Get all photos
      */
