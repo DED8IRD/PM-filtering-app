@@ -3,7 +3,6 @@
     <string name="action_settings">Settings</string>
     <string name="CaptureBtn">Capture</string>
     <string name="Cancel">Cancel</string>
-    <string name="title_activity_login">"Login"</string>
     <string name="ParticipantMessage">Please Enter Participant Info</string>
     <string name="btnNext">Next</string>
     <string name="txtParticipant">Participant ID</string>
