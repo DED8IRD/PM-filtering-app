@@ -1,6 +1,4 @@
 package hcilab.pm_filtering_app;
-import sqlitedb.helpers.DBHelper;
-import sqlitedb.models.Photo;
 import android.content.Context;
 import android.content.res.Resources;
 import android.graphics.Bitmap;
@@ -22,6 +20,9 @@ import java.lang.ref.WeakReference;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+
+import sqlitedb.helpers.DBHelper;
+import sqlitedb.models.Photo;
 
 public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> {
 
@@ -181,12 +182,19 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
                     db.deletePhoto(photo, timestamp);
                     boolean deleted = image.delete();
                     posTitle.remove(pos);
+                    removeAt(getAdapterPosition());
                     Toast.makeText(CameraIntentActivity.getMainContext(),imageFileName + " deleted successfully", Toast.LENGTH_SHORT).show();
                     return true;
                 default:
                     return false;
             }
         }
+    }
+
+    private void removeAt(int position) {
+        posTitle.remove(position);
+        notifyItemRemoved(position);
+        notifyItemRangeChanged(position, posTitle.size());
     }
 
     public static BitmapWorkerTask getBitMapWorkerTast(ImageView imageView) {
