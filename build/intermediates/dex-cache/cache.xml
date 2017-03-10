@@ -7,7 +7,7 @@
         jumboMode="true"
         optimize="true"
         revision="22.0.1"
-        sha1="3844f83032cb67eb8b767ed09c4ac808125ce8ae">
+        sha1="25227c2bafaa614ac99a5d685f0fd672385675e3">
         <dex dex="C:\Users\Rory\Documents\PM-filtering-app\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run_ae354c3ea12c177b85de18870f8680440bfeb1d5\classes.dex" />
     </item>
     <item
@@ -70,7 +70,7 @@
         jumboMode="true"
         optimize="true"
         revision="22.0.1"
-        sha1="498f292c1d8b31edaafb3bf416b144cbf9b42560">
+        sha1="d1c67a80e8ff5f8e745ca672c494167f66f51c33">
         <dex dex="C:\Users\Rory\Documents\PM-filtering-app\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run-bootstrap_249e305e3f96a6a21b95ddccc960fbccbfc34d84\classes.dex" />
     </item>
 
