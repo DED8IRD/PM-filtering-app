@@ -12,6 +12,15 @@
     </item>
     <item
         is-multidex="true"
+        jar="C:\Users\Rory\Documents\PM-filtering-app\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="22.0.1"
+        sha1="b82c9615e0f1694449fb70751835bcc8cf0bd15c">
+        <dex dex="C:\Users\Rory\Documents\PM-filtering-app\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run-bootstrap_249e305e3f96a6a21b95ddccc960fbccbfc34d84\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
         jar="C:\Users\Rory\Documents\PM-filtering-app\app\build\intermediates\exploded-aar\com.android.support\recyclerview-v7\24.2.1\jars\classes.jar"
         jumboMode="true"
         optimize="true"
@@ -63,15 +72,6 @@
         revision="22.0.1"
         sha1="8de3aafecbdf98a61db6427f008f2d515bcd2544">
         <dex dex="C:\Users\Rory\Documents\PM-filtering-app\app\build\intermediates\transforms\dex\debug\folders\1000\10\support-annotations-24.2.1_efcc072333c4eb358c3b509e52ccc8b1034602f9\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Rory\Documents\PM-filtering-app\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="22.0.1"
-        sha1="c8f9142573d2bd1ff2230e73a11047c5f906389f">
-        <dex dex="C:\Users\Rory\Documents\PM-filtering-app\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run-bootstrap_249e305e3f96a6a21b95ddccc960fbccbfc34d84\classes.dex" />
     </item>
 
 </items>

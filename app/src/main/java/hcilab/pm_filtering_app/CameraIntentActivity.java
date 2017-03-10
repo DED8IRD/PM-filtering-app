@@ -38,8 +38,8 @@ import android.util.Log;
 public class CameraIntentActivity extends Activity {
     private static final int ACTIVITY_START_CAMERA_APP = 0;
     private ImageView mPhotoCapturedImageView;
-    private String mImageFileLocation = "";
-    private String GALLERY_LOCATION = "00000";
+    private String mImageFileLocation = null;
+    private String GALLERY_LOCATION = null;
     private File mGalleryFolder;
     private static LruCache<String, Bitmap> memoryCache;
     private static Set<SoftReference<Bitmap>> reusableBitmap;
@@ -48,15 +48,17 @@ public class CameraIntentActivity extends Activity {
     private static Context context;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camara_intent);
         CameraIntentActivity.context = getApplicationContext();
+        //Pass participant ID from login screen as gallery location
+        Bundle bundle = getIntent().getExtras();
+        GALLERY_LOCATION = bundle.getString("send_participant");
         // Create gallery
         createImageGallery();
-//        // Initialize db
+//      // Initialize db
         db = new DBHelper(CameraIntentActivity.context);
         mRecyclerView = (RecyclerView) findViewById(R.id.galleryRecyclerView);
         //Int at end = number of columns in recycler view
