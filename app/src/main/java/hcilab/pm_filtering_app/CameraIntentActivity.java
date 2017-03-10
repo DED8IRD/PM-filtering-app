@@ -165,7 +165,7 @@ public class CameraIntentActivity extends Activity {
 
     File createImageFile() throws IOException {
 
-        String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+        String timeStamp = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss").format(new Date());
         String imageFileName = "IMAGE_" + timeStamp + "_";
         File image = File.createTempFile(imageFileName,".jpg", mGalleryFolder);
         mImageFileLocation = image.getAbsolutePath();

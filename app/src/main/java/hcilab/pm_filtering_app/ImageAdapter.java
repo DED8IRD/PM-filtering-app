@@ -19,6 +19,8 @@ import android.widget.Toast;
 
 import java.io.File;
 import java.lang.ref.WeakReference;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 
 public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> {
@@ -110,7 +112,6 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
     }
 
 
-
     @Override
     public int getItemCount() {
         return imagesFile.listFiles().length;
@@ -145,11 +146,9 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
             String imageFileName = posTitle.get(pos);
 
             //Toast.makeText(CameraIntentActivity.getMainContext(), Integer.toString(pos), Toast.LENGTH_SHORT).show();
-            
             //int position = this.mPosition;
 
             PopupMenu popupMenu = new PopupMenu(imageView.getContext(), view);
-            //PopupMenu popupMenu = new PopupMenu(CameraIntentActivity.getMainContext(), view);
             popupMenu.setOnMenuItemClickListener(this);
             MenuInflater inflater = popupMenu.getMenuInflater();
             inflater.inflate(R.menu.my_popup, popupMenu.getMenu());
@@ -177,10 +176,16 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
                     negative = false;
                     db.updateTag(photo, "positive");
                     return true;
+                case R.id.delete:
+                    String timestamp = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss").format(new Date());
+                    db.deletePhoto(photo, timestamp);
+                    boolean deleted = image.delete();
+                    posTitle.remove(pos);
+                    Toast.makeText(CameraIntentActivity.getMainContext(),imageFileName + " deleted successfully", Toast.LENGTH_SHORT).show();
+                    return true;
                 default:
                     return false;
             }
-            //return false;
         }
     }
 
