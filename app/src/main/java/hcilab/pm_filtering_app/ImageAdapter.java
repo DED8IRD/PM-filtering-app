@@ -181,8 +181,12 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
                     String timestamp = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss").format(new Date());
                     db.deletePhoto(photo, timestamp);
                     boolean deleted = image.delete();
+
                     posTitle.remove(pos);
-                    removeAt(getAdapterPosition());
+                    notifyItemRemoved(pos);
+                    notifyItemRangeChanged(pos, posTitle.size());
+                    imageView.invalidate();
+
                     Toast.makeText(CameraIntentActivity.getMainContext(),imageFileName + " deleted successfully", Toast.LENGTH_SHORT).show();
                     return true;
                 default:
@@ -192,6 +196,8 @@ public class ImageAdapter extends RecyclerView.Adapter<ImageAdapter.ViewHolder> 
     }
 
     private void removeAt(int position) {
+        Toast.makeText(CameraIntentActivity.getMainContext(), Integer.toString(position), Toast.LENGTH_SHORT).show();
+
         posTitle.remove(position);
         notifyItemRemoved(position);
         notifyItemRangeChanged(position, posTitle.size());

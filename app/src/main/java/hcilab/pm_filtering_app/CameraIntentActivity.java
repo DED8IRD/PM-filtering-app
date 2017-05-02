@@ -1,6 +1,4 @@
 package hcilab.pm_filtering_app;
-import sqlitedb.helpers.DBHelper;
-import sqlitedb.models.Photo;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -13,6 +11,7 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.util.LruCache;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -29,7 +28,9 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
-import android.util.Log;
+
+import sqlitedb.helpers.DBHelper;
+import sqlitedb.models.Photo;
 
 
 /**
@@ -271,5 +272,17 @@ public class CameraIntentActivity extends Activity {
     public static Context getMainContext() {
         return CameraIntentActivity.context;
     }
+
+    /*
+    private void removeAt(int position) {
+        Toast.makeText(CameraIntentActivity.getMainContext(), Integer.toString(position), Toast.LENGTH_SHORT).show();
+
+        mRecyclerView.removeViewAt(position);
+
+        notifyItemRemoved(position);
+        notifyItemRangeChanged(position, posTitle.size());
+        notifyDataSetChanged();
+    }
+    */
 
 }
