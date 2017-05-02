@@ -7,4 +7,7 @@
     <string name="btnNext">Next</string>
     <string name="txtParticipant">Participant ID</string>
     <string name="btnComplete">End session</string>
+    <string name="title_activity_rating">RatingActivity</string>
+    <string name="ratingTitle">Please Rank your Photo</string>
+    <string name="tvValue">Value:</string>
 </resources>

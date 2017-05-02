@@ -2,76 +2,76 @@
 <items version="2" >
 
     <item
-        is-multidex="true"
-        jar="C:\Users\Rory\Documents\PM-filtering-app\app\build\intermediates\incremental-runtime-classes\debug\instant-run.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="22.0.1"
-        sha1="8a32ad49326c5c15f58534678fd98bbf672c3068">
-        <dex dex="C:\Users\Rory\Documents\PM-filtering-app\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run_ae354c3ea12c177b85de18870f8680440bfeb1d5\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Rory\Documents\PM-filtering-app\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="22.0.1"
-        sha1="b7cc15b9e7d22ac386b51ab7b639d4859cf7e27a">
-        <dex dex="C:\Users\Rory\Documents\PM-filtering-app\app\build\intermediates\transforms\dex\debug\folders\1000\10\instant-run-bootstrap_249e305e3f96a6a21b95ddccc960fbccbfc34d84\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Rory\Documents\PM-filtering-app\app\build\intermediates\exploded-aar\com.android.support\recyclerview-v7\24.2.1\jars\classes.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="22.0.1"
-        sha1="7521486d9bfd2cd9e756e0cf75ed7d97f2ce2d3b">
-        <dex dex="C:\Users\Rory\Documents\PM-filtering-app\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-recyclerview-v7-24.2.1_1fd419e6e5676708a4d8007665b53758aca7a38a\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
-        jar="C:\Users\Rory\Documents\PM-filtering-app\app\build\intermediates\exploded-aar\com.android.support\support-core-ui\24.2.1\jars\classes.jar"
-        jumboMode="true"
+        is-multidex="false"
+        jar="/Users/alonpek/AndroidStudioProjects/PM-filtering-app/app/build/intermediates/exploded-aar/com.android.support/support-core-ui/24.2.1/jars/classes.jar"
+        jumboMode="false"
         optimize="true"
         revision="22.0.1"
         sha1="e7f3132168957eefc46229fc32c3bd464642b71e">
-        <dex dex="C:\Users\Rory\Documents\PM-filtering-app\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-core-ui-24.2.1_7395d64194982285b8f5d1998cd34d9ac805c405\classes.dex" />
+        <dex dex="/Users/alonpek/AndroidStudioProjects/PM-filtering-app/app/build/intermediates/pre-dexed/debug/com.android.support-support-core-ui-24.2.1_0bf38e3df59ad786097854da2bfa6c918687b7f5.jar" />
     </item>
     <item
-        is-multidex="true"
-        jar="C:\Users\Rory\Documents\PM-filtering-app\app\build\intermediates\exploded-aar\com.android.support\support-core-ui\24.2.1\jars\libs\internal_impl-24.2.1.jar"
-        jumboMode="true"
+        is-multidex="false"
+        jar="/Users/alonpek/AndroidStudioProjects/PM-filtering-app/app/build/intermediates/exploded-aar/com.android.support/recyclerview-v7/24.2.1/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="22.0.1"
+        sha1="7521486d9bfd2cd9e756e0cf75ed7d97f2ce2d3b">
+        <dex dex="/Users/alonpek/AndroidStudioProjects/PM-filtering-app/app/build/intermediates/pre-dexed/debug/com.android.support-recyclerview-v7-24.2.1_2ea25a43ceb946adf69335cc31f46aef411d7a18.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/alonpek/AndroidStudioProjects/PM-filtering-app/app/build/intermediates/exploded-aar/com.android.support/support-core-ui/24.2.1/jars/libs/internal_impl-24.2.1.jar"
+        jumboMode="false"
         optimize="true"
         revision="22.0.1"
         sha1="867dad63c33388ff8c7644b236579355036d075f">
-        <dex dex="C:\Users\Rory\Documents\PM-filtering-app\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-24.2.1_fc0b72fc4becd738d28665ce1337ca71570f30b8\classes.dex" />
+        <dex dex="/Users/alonpek/AndroidStudioProjects/PM-filtering-app/app/build/intermediates/pre-dexed/debug/internal_impl-24.2.1_abc531302670e9d388c64b2c034e341ae9c7d5d2.jar" />
     </item>
     <item
-        is-multidex="true"
-        jar="C:\Users\Rory\Documents\PM-filtering-app\app\build\intermediates\exploded-aar\com.android.support\support-compat\24.2.1\jars\classes.jar"
-        jumboMode="true"
+        is-multidex="false"
+        jar="/Users/alonpek/AndroidStudioProjects/PM-filtering-app/app/build/intermediates/exploded-aar/com.android.support.constraint/constraint-layout/1.0.2/jars/classes.jar"
+        jumboMode="false"
         optimize="true"
         revision="22.0.1"
-        sha1="0ecb4b595fa0f0f8018a149ace3ea6525624f94e">
-        <dex dex="C:\Users\Rory\Documents\PM-filtering-app\app\build\intermediates\transforms\dex\debug\folders\1000\10\com.android.support-support-compat-24.2.1_a202125f1c3d6e0f7741cd381a9d14882f935124\classes.dex" />
+        sha1="44ee06abb66da30f5855e6bf54574e64cdcd982a">
+        <dex dex="/Users/alonpek/AndroidStudioProjects/PM-filtering-app/app/build/intermediates/pre-dexed/debug/com.android.support.constraint-constraint-layout-1.0.2_ea0f0c4dbf175342e9968487e12a0313542051af.jar" />
     </item>
     <item
-        is-multidex="true"
-        jar="C:\Users\Rory\Documents\PM-filtering-app\app\build\intermediates\exploded-aar\com.android.support\support-compat\24.2.1\jars\libs\internal_impl-24.2.1.jar"
-        jumboMode="true"
+        is-multidex="false"
+        jar="/Users/alonpek/Library/Android/sdk/extras/m2repository/com/android/support/constraint/constraint-layout-solver/1.0.2/constraint-layout-solver-1.0.2.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="22.0.1"
+        sha1="b9cd8fc6bd15cb915735d34535db30ece0c44603">
+        <dex dex="/Users/alonpek/AndroidStudioProjects/PM-filtering-app/app/build/intermediates/pre-dexed/debug/constraint-layout-solver-1.0.2_a8e1f68bf4290344eeb9352c80d508c4ccfefa01.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/alonpek/AndroidStudioProjects/PM-filtering-app/app/build/intermediates/exploded-aar/com.android.support/support-compat/24.2.1/jars/libs/internal_impl-24.2.1.jar"
+        jumboMode="false"
         optimize="true"
         revision="22.0.1"
         sha1="7e4389bd133359a2ff88623ff1e4ff93d6e6f780">
-        <dex dex="C:\Users\Rory\Documents\PM-filtering-app\app\build\intermediates\transforms\dex\debug\folders\1000\10\internal_impl-24.2.1_2514075003e6529ea969f89df39c9993ba668e36\classes.dex" />
+        <dex dex="/Users/alonpek/AndroidStudioProjects/PM-filtering-app/app/build/intermediates/pre-dexed/debug/internal_impl-24.2.1_5a7fda60534602665634e2cfcb9583926704e90a.jar" />
     </item>
     <item
-        is-multidex="true"
-        jar="C:\Users\Rory\AppData\Local\Android\android-sdk\extras\android\m2repository\com\android\support\support-annotations\24.2.1\support-annotations-24.2.1.jar"
-        jumboMode="true"
+        is-multidex="false"
+        jar="/Users/alonpek/Library/Android/sdk/extras/android/m2repository/com/android/support/support-annotations/24.2.1/support-annotations-24.2.1.jar"
+        jumboMode="false"
         optimize="true"
         revision="22.0.1"
         sha1="8de3aafecbdf98a61db6427f008f2d515bcd2544">
-        <dex dex="C:\Users\Rory\Documents\PM-filtering-app\app\build\intermediates\transforms\dex\debug\folders\1000\10\support-annotations-24.2.1_efcc072333c4eb358c3b509e52ccc8b1034602f9\classes.dex" />
+        <dex dex="/Users/alonpek/AndroidStudioProjects/PM-filtering-app/app/build/intermediates/pre-dexed/debug/support-annotations-24.2.1_5ece393f887a10d6344c4a259f165e6746776d80.jar" />
+    </item>
+    <item
+        is-multidex="false"
+        jar="/Users/alonpek/AndroidStudioProjects/PM-filtering-app/app/build/intermediates/exploded-aar/com.android.support/support-compat/24.2.1/jars/classes.jar"
+        jumboMode="false"
+        optimize="true"
+        revision="22.0.1"
+        sha1="0ecb4b595fa0f0f8018a149ace3ea6525624f94e">
+        <dex dex="/Users/alonpek/AndroidStudioProjects/PM-filtering-app/app/build/intermediates/pre-dexed/debug/com.android.support-support-compat-24.2.1_cf1ab8361a5131b6de011f87b972deb3bfa22c59.jar" />
     </item>
 
 </items>
