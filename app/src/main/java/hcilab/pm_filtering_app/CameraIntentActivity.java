@@ -1,6 +1,4 @@
 package hcilab.pm_filtering_app;
-import sqlitedb.helpers.DBHelper;
-import sqlitedb.models.Photo;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -13,6 +11,7 @@ import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.util.LruCache;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -29,7 +28,10 @@ import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
-import android.util.Log;
+
+import sqlitedb.helpers.DBHelper;
+import sqlitedb.models.Photo;
+
 
 
 /**
@@ -46,6 +48,8 @@ public class CameraIntentActivity extends Activity {
     private DBHelper db;
     private RecyclerView mRecyclerView;
     private static Context context;
+    private int rating;
+    private int REQUEST_CODE = 1;
 
 
     @Override
@@ -153,6 +157,10 @@ public class CameraIntentActivity extends Activity {
             mRecyclerView.swapAdapter(newImageAdapter, false);
 
         }
+
+        if(requestCode == REQUEST_CODE && resultCode == RESULT_OK){
+            rating = Integer.parseInt(data.getStringExtra("key_rating"));
+        }
     }
 
     private void createImageGallery() {
@@ -162,6 +170,7 @@ public class CameraIntentActivity extends Activity {
             mGalleryFolder.mkdirs();
         }
     }
+
 
     File createImageFile() throws IOException {
 
@@ -173,6 +182,19 @@ public class CameraIntentActivity extends Activity {
         // Add photo to db
         Photo photo = new Photo(GALLERY_LOCATION, timeStamp, mImageFileLocation);
         db.addPhoto(photo);
+
+
+        //Update rank of photo
+        //int rank = -1;
+
+
+        Intent i = new Intent(getApplicationContext(), RatingActivity.class);
+        startActivityForResult(i, 0);
+
+
+
+
+        db.updateRank(photo, rating);
 
         Log.d("Get photos", "Getting all photos from db");
         List<Photo> allPhotos = db.getAllPhotos();
@@ -189,6 +211,7 @@ public class CameraIntentActivity extends Activity {
         return image;
 
     }
+
 
     void setReducedImageSize() {
         int targetImageViewWidth = mPhotoCapturedImageView.getWidth();
@@ -215,7 +238,8 @@ public class CameraIntentActivity extends Activity {
     }
 
     public static void setBitmapToMemoryCache(String key, Bitmap bitmap) {
-        if (getBitmapFromMemoryCache(key) == null) {
+        //if (getBitmapFromMemoryCache(key) == null) {
+        if(getBitmapFromMemoryCache(key) != null){
             memoryCache.put(key, bitmap);
         }
     }
