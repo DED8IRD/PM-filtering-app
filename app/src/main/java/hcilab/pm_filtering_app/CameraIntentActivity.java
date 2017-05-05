@@ -22,7 +22,9 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.lang.ref.SoftReference;
 import java.text.SimpleDateFormat;
@@ -45,7 +47,7 @@ public class CameraIntentActivity extends Activity {
     private static final int ACTIVITY_START_CAMERA_APP = 0;
     private ImageView mPhotoCapturedImageView;
     private String mImageFileLocation = null;
-    private String GALLERY_LOCATION = null;
+    private String participant = null;
     private File mGalleryFolder;
     private static LruCache<String, Bitmap> memoryCache;
     private static Set<SoftReference<Bitmap>> reusableBitmap;
@@ -54,7 +56,9 @@ public class CameraIntentActivity extends Activity {
     private static Context context;
     private int rating;
     private int REQUEST_CODE = 1;
+    private String email = "eunikawu@gmail.com";
     Button btnExport = null;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +67,7 @@ public class CameraIntentActivity extends Activity {
         CameraIntentActivity.context = getApplicationContext();
         // Pass participant ID from login screen as gallery location
         Bundle bundle = getIntent().getExtras();
-        GALLERY_LOCATION = bundle.getString("send_participant");
+        participant = bundle.getString("send_participant");
         // Create gallery
         createImageGallery();
         // Initialize db
@@ -88,9 +92,21 @@ public class CameraIntentActivity extends Activity {
                                 dialogInterface.cancel();
                             }
                         })
+                        // Delete photos from participant directory and export db to csv on click
                         .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialogInterface, int i) {
+                                File output = writeToCsv(mGalleryFolder, db);
+                                // Email csv
+                                Uri attachment = Uri.fromFile(output);
+                                Intent send = new Intent(Intent.ACTION_SEND);
+                                send.putExtra(Intent.EXTRA_EMAIL, new String[] {email});
+                                send.putExtra(Intent.EXTRA_SUBJECT, "PM Filtering Lab export " + output.getName());
+                                send.putExtra(Intent.EXTRA_TEXT, output.getName());
+                                send.putExtra(Intent.EXTRA_STREAM, attachment);
+                                send.setType("text/html");
+                                startActivity(send);
+                                db.clearPhoto();
                                 deleteRecursive(mGalleryFolder);
                                 Intent next = new Intent(getApplicationContext(), LoginActivity.class);
                                 startActivity(next);
@@ -188,7 +204,7 @@ public class CameraIntentActivity extends Activity {
 
     private void createImageGallery() {
         File storageDirectory = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES);
-        mGalleryFolder = new File(storageDirectory, GALLERY_LOCATION);
+        mGalleryFolder = new File(storageDirectory, participant);
         if (!mGalleryFolder.exists()) {
             mGalleryFolder.mkdirs();
         }
@@ -203,7 +219,7 @@ public class CameraIntentActivity extends Activity {
         mImageFileLocation = image.getAbsolutePath();
 
         // Add photo to db
-        Photo photo = new Photo(GALLERY_LOCATION, timeStamp, mImageFileLocation);
+        Photo photo = new Photo(participant, timeStamp, mImageFileLocation);
         db.addPhoto(photo);
 
         //Update rank of photo
@@ -312,10 +328,35 @@ public class CameraIntentActivity extends Activity {
         return CameraIntentActivity.context;
     }
 
+    // Recursively delete all files and subdirectories
     void deleteRecursive(File fileOrDir){
         if (fileOrDir.isDirectory())
             for (File child : fileOrDir.listFiles())
                 deleteRecursive(child);
         fileOrDir.delete();
+    }
+    
+    File writeToCsv(File path, DBHelper db){
+        File output = new File(path + ".csv");
+        try {
+            BufferedWriter outputToFile = new BufferedWriter(new FileWriter(output, true));
+            outputToFile.write("id,timestamp,participant,image_file,tag,rank,deleted_on\n");
+            List<Photo> allPhotos = db.getAllPhotos();
+            for (Photo photo: allPhotos) {
+                if (photo.getParticipant().equals(participant)) {
+                    outputToFile.write(String.valueOf(photo.getId()) + "," +
+                            photo.getTimestamp() + ',' +
+                            photo.getParticipant() + ',' +
+                            photo.getImage() + ',' +
+                            photo.getTag() + ',' +
+                            String.valueOf(photo.getRank()) + ',' +
+                            photo.getDelete() + "\n");
+                }
+            }
+            outputToFile.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return output;
     }
 }

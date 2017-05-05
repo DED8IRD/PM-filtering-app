@@ -12,15 +12,6 @@
     </item>
     <item
         is-multidex="true"
-        jar="C:\Users\DED10RD\Documents\School\PM-filtering-app\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
-        jumboMode="true"
-        optimize="true"
-        revision="25.0.0"
-        sha1="e20f8a10696a823f6e1be293557900229527ec14">
-        <dex dex="C:\Users\DED10RD\Documents\School\PM-filtering-app\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run-bootstrap_4d4670a74ca946bf25c6b7e5b7cecf9f6d911bbf\classes.dex" />
-    </item>
-    <item
-        is-multidex="true"
         jar="C:\Users\DED10RD\.android\build-cache\b275a07c3dbb9add6f69923f051dc25ef65a0cdc\output\jars\classes.jar"
         jumboMode="true"
         optimize="true"
@@ -36,6 +27,15 @@
         revision="25.0.0"
         sha1="510aa6efc159983dfbffa676a0dae37568c0a46f">
         <dex dex="C:\Users\DED10RD\Documents\School\PM-filtering-app\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run_d69f7530bc7cbeef6d8a12e19674aa78f70b5bba\classes.dex" />
+    </item>
+    <item
+        is-multidex="true"
+        jar="C:\Users\DED10RD\Documents\School\PM-filtering-app\app\build\intermediates\incremental-classes\debug\instant-run-bootstrap.jar"
+        jumboMode="true"
+        optimize="true"
+        revision="25.0.0"
+        sha1="a8b9ae31aaebfe0f8c3637d01c7b4304e3c0058a">
+        <dex dex="C:\Users\DED10RD\Documents\School\PM-filtering-app\app\build\intermediates\transforms\dex\debug\folders\1000\10000\instant-run-bootstrap_4d4670a74ca946bf25c6b7e5b7cecf9f6d911bbf\classes.dex" />
     </item>
 
 </items>
