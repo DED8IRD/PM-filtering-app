@@ -11,8 +11,6 @@ import android.widget.EditText;
 
 public class LoginActivity extends Activity {
 
-    Button buttonDiscover = null;
-    Button buttonConnect = null;
     Button btnNext = null;
     EditText participantID = null;
 
@@ -21,12 +19,8 @@ public class LoginActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
-
         participantID = (EditText) findViewById(R.id.txtParticipant);
-
         btnNext = (Button) findViewById(R.id.btnNext);
-
-
         btnNext.setOnClickListener(new View.OnClickListener() {
             public void onClick(View v) {
                 String participant = participantID.getText().toString();

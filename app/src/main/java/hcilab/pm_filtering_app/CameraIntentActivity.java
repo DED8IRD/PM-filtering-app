@@ -1,6 +1,9 @@
 package hcilab.pm_filtering_app;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -16,6 +19,7 @@ import android.util.LruCache;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 
 import java.io.File;
@@ -50,33 +54,54 @@ public class CameraIntentActivity extends Activity {
     private static Context context;
     private int rating;
     private int REQUEST_CODE = 1;
-
+    Button btnExport = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_camara_intent);
+        setContentView(R.layout.activity_camera_intent);
         CameraIntentActivity.context = getApplicationContext();
-        //Pass participant ID from login screen as gallery location
+        // Pass participant ID from login screen as gallery location
         Bundle bundle = getIntent().getExtras();
         GALLERY_LOCATION = bundle.getString("send_participant");
         // Create gallery
         createImageGallery();
-//      // Initialize db
+        // Initialize db
         db = new DBHelper(CameraIntentActivity.context);
         mRecyclerView = (RecyclerView) findViewById(R.id.galleryRecyclerView);
-        //Int at end = number of columns in recycler view
+        // Int at end = number of columns in recycler view
         RecyclerView.LayoutManager layoutManager = new GridLayoutManager(this, 3);
         mRecyclerView.setLayoutManager(layoutManager);
-
         RecyclerView.Adapter imageAdapter = new ImageAdapter(mGalleryFolder, this);
         mRecyclerView.setAdapter(imageAdapter);
-
-
-        //Set up memory cache
+        // Export button
+        btnExport = (Button) findViewById(R.id.btnExport);
+        btnExport.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder dialog = new AlertDialog.Builder(CameraIntentActivity.this);
+                dialog.setTitle("Warning")
+                        .setMessage(getResources().getString(R.string.exportMessage))
+                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                dialogInterface.cancel();
+                            }
+                        })
+                        .setPositiveButton("Yes", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialogInterface, int i) {
+                                deleteRecursive(mGalleryFolder);
+                                Intent next = new Intent(getApplicationContext(), LoginActivity.class);
+                                startActivity(next);
+                                finish();
+                            }
+                        }).create().show();
+                }
+        });
+        // Set up memory cache
         final int maxMemorySize = (int) Runtime.getRuntime().maxMemory();
         final int cacheSize = maxMemorySize / 100;
-
         memoryCache = new LruCache<String, Bitmap>(cacheSize) {
 
             @Override
@@ -140,7 +165,6 @@ public class CameraIntentActivity extends Activity {
         }
 
         callCameraApplicationIntent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photoFile));
-
         startActivityForResult(callCameraApplicationIntent, ACTIVITY_START_CAMERA_APP);
     }
 
@@ -155,7 +179,6 @@ public class CameraIntentActivity extends Activity {
             //setReducedImageSize();
             RecyclerView.Adapter newImageAdapter = new ImageAdapter(mGalleryFolder, this);
             mRecyclerView.swapAdapter(newImageAdapter, false);
-
         }
 
         if(requestCode == REQUEST_CODE && resultCode == RESULT_OK){
@@ -183,17 +206,10 @@ public class CameraIntentActivity extends Activity {
         Photo photo = new Photo(GALLERY_LOCATION, timeStamp, mImageFileLocation);
         db.addPhoto(photo);
 
-
         //Update rank of photo
         //int rank = -1;
-
-
         Intent i = new Intent(getApplicationContext(), RatingActivity.class);
         startActivityForResult(i, 0);
-
-
-
-
         db.updateRank(photo, rating);
 
         Log.d("Get photos", "Getting all photos from db");
@@ -296,4 +312,10 @@ public class CameraIntentActivity extends Activity {
         return CameraIntentActivity.context;
     }
 
+    void deleteRecursive(File fileOrDir){
+        if (fileOrDir.isDirectory())
+            for (File child : fileOrDir.listFiles())
+                deleteRecursive(child);
+        fileOrDir.delete();
+    }
 }

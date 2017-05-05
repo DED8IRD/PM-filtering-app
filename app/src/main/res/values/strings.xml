@@ -11,4 +11,6 @@
     <string name="ratingTitle">Please Rate your Photo</string>
     <string name="tvValue">Value:</string>
     <string name="btnConfirm">Confirm Rating</string>
+    <string name="btnExport">Export</string>
+    <string name="exportMessage">This feature is for researchers to export and delete all user content. Do you want to end the study and delete all content from this session? This action cannot be undone.</string>
 </resources>
